@@ -4,24 +4,38 @@ const Sequelize = require('sequelize');
 const db = require('./db');
 
 // definindo tabela
-const User = db.define('User', {
-    firstName: {
+const User = db.define('users', {
+    id: {
+      type: Sequelize.INTEGER,
+      primaryKey: true,
+      autoIncrement: true,
+      allowNull: false
+    },
+    name: {
       type: Sequelize.STRING,
       allowNull: false
     },
-    lastName: {
-      type: Sequelize.STRING
-    },
     username: {
         type: Sequelize.STRING,
-        allowNull: false
+        allowNull: false,
+        unique: true
     },
     password: {
         type: Sequelize.STRING,
         allowNull: false
     },
     email: {
-        type: Sequelize.STRING
+        type: Sequelize.STRING,
+        allowNull: false,
+        unique: true
+    },
+    createdAt: {
+        type: Sequelize.DATE,
+        allowNull: false
+    },
+    updatedAt: {
+        type: Sequelize.DATE,
+        allowNull: false
     }
 });
 
@@ -30,3 +44,5 @@ User.sync().then(() => {
 }).catch((err) => {
     console.log('Houv um erro: '+err);
 })
+
+module.exports = User;

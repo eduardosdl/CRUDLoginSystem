@@ -10,9 +10,11 @@ const user = require('./routes/user');
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended: true}));
 // ejs
-app.set("view engine", "ejs");
+app.set('view engine', 'ejs');
 // public
 app.use(express.static(path.join(__dirname, 'public')));
+// redirecionamento da viwes
+app.set('views', path.join(__dirname, 'views'));
 // mysql
 
 // routes
