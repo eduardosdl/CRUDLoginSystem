@@ -2,17 +2,15 @@
 <html lang="en">
     <%- include('../partials/head') %>
     <body>
-        <p><%=msg%></p>
-        <form action="/user/created" method="post">
-            <p>nome: </p>
-            <input type="text" name="nome" placeholder="digite seu nome" required>
-            <p>ususario: </p>
-            <input type="text" name="username" placeholder="ususario" required>
-            <p>senha: </p>
-            <input type="password" name="password" placeholder="senha" required>
-            <p>Email: </p>
-            <input type="email" name="email" placeholder="eduard@gmail.com" required>
-            <button type="submit">Submit</button>
-        </form>
+        <div class="container">
+            <h1>Registre-se</h1>
+            <form action="/user/created" method="post" class="conteudo">
+                <input type="text" name="nome" placeholder="Nome completo" required>
+                <input type="text" name="username" placeholder="Nome de usuário" required>
+                <input type="password" name="password" placeholder="Senha" required>
+                <input type="email" name="email" placeholder="Email" required>
+                <button type="submit">Registrar</button>
+            </form>
+        </div>
     </body>
 </html>

@@ -1,4 +1,68 @@
 body {
-    background-color: black;
-    color: white;
+    margin: 0;
+    box-sizing: border-box;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    background-color: #f0f0f0;
+    font-family: 'Poppins', sans-serif;
+}
+
+.container {
+    width: 40%;
+    height: fit-content;
+    padding-bottom: 30px;
+    border-radius: 10px;
+    background-color: #ffffff;
+}
+
+h1 {
+    margin-left: 40px;
+}
+
+.conteudo {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+}
+
+form input {
+    background-color: #ffffff;
+    height: 25px;
+    border-radius: 5px;
+    border: 1px solid;
+    margin: 10px 45px;
+    padding: 5px 10px;
+    font-size: 14px;
+    font-weight: bold;
+}
+
+.dados {
+    height: 25px;
+    margin: 10px 45px;
+}
+
+button {
+    border: none;
+    border-radius: 5px;
+    width: calc(100% - 90px);
+    height: 35px;
+    margin: 0 45px 10px 45px;
+    font-weight: bold;
+    font-size: 14px;
+    color: #ffffff;
+    background-color: #52c43c;
+    margin: 10px 45px;
+}
+
+.btn-exit {
+    background-color: #d41b1b;
+    margin-top: 10px;
+}
+
+small {
+    display: flex;
+    justify-content: center;
+    margin-top: 10px;
 }

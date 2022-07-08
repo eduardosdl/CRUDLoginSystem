@@ -2,16 +2,15 @@
 <html lang="en">
     <%- include('../partials/head') %>
     <body>
-        <h1>Formulario</h1>
-        <hr>
-        <form action="/user/login" method="post">
-            <label for="username">Username: </label>
-                <input type="text" name="username" placeholder="ususario">
-            <label for="password">password</label>
-                <input type="password" name="password" placeholder="senha">
-            <button type="submit">Submit</button>
-        </form>
+        <div class="container">
+            <h1>Login</h1>
+            <form action="/user/login" method="post" class="conteudo">
+                <input type="text" name="username" placeholder="Username">
+                <input type="password" name="password" placeholder="Password">
+                <button type="submit">Entrar</button>
+            </form>
 
-        <a href="/user/register"><button>Criar</button></a>
+            <small>Não tem uma conta? <a href="/user/register"> Crie uma</a></small>
+        </div>
     </body>
 </html>
