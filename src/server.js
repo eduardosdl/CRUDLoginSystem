@@ -1,11 +1,26 @@
 // requisição de modulos
-const path = require('path');
 const express = require('express');
 const bodyParser = require('body-parser');
-const app = express();
 const user = require('./routes/user');
+const path = require('path');
+const app = express();
+const session = require('express-session');
+const flash = require('connect-flash');
 
 // config
+// session
+app.use(session({
+    secret: "dhfphefnsdk",
+    resave: true,
+    saveUninitialized: true
+}));
+app.use(flash());
+// middlewares
+app.use((req, res, next) => {
+    res.locals.success_msg = req.flash("success_msg");
+    res.locals.error_msg = req.flash("error_msg");
+    next();
+});
 // body-parser
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended: true}));
@@ -15,7 +30,7 @@ app.set('view engine', 'ejs');
 app.use(express.static(path.join(__dirname, 'public')));
 // redirecionamento da viwes
 app.set('views', path.join(__dirname, 'views'));
-// mysql
+// 
 
 // routes
 app.get('/', (req, res) => res.render("pages/index"));

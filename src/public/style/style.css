@@ -2,6 +2,7 @@ body {
     margin: 0;
     box-sizing: border-box;
     display: flex;
+    flex-direction: column;
     justify-content: center;
     align-items: center;
     height: 100vh;
@@ -9,10 +10,40 @@ body {
     font-family: 'Poppins', sans-serif;
 }
 
-.container {
+.error {
+    border: 2px solid #d41b1b;
+    background-color: #df4747;
+    box-sizing: border-box;
+    border-radius: 10px;
+    width: 40%;
+    height: 40px;
+    margin-bottom: 10px;
+    padding-left: 10px;
+}
+
+.success {
+    border: 2px solid #2ad41b;
+    background-color: #72df47;
+    box-sizing: border-box;
+    border-radius: 10px;
+    width: 40%;
+    height: 40px;
+    margin-bottom: 10px;
+    padding-left: 10px;
+}
+
+.success p,
+.error p {
+    margin: 0;
+    padding: 5px;
+    color: #ffffff;
+    font-size: 16px;
+}
+
+.center {
     width: 40%;
     height: fit-content;
-    padding-bottom: 30px;
+    padding: 5px 0 30px 0;
     border-radius: 10px;
     background-color: #ffffff;
 }
@@ -56,7 +87,7 @@ button {
     margin: 10px 45px;
 }
 
-.btn-exit {
+.btn-sair {
     background-color: #d41b1b;
     margin-top: 10px;
 }
