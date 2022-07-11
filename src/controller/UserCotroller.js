@@ -1,27 +1,34 @@
-const bcrypt = require('bcryptjs');
 const bodyParser = require('body-parser');
 const User = require('../models/User');
+const bcrypt = require('bcryptjs');
+const passport = require('passport');
 
 
 // rota post /user/login
-const validate = async (req, res) => {
-    const user = req.body;
+const login = (req, res, next) => {
+    // chama o passport para fazer a autenticação
+    passport.authenticate('local', {
+        successRedirect: '/user/logado',
+        failureRedirect: '/',
+        failureFlash: true
+    })(req, res, next);
+}
 
-    const conta = await User.findAll({
-        attributes: ['password'],
-        where: {
-            username: user.username
-        }
-    });
+const logado = (req, res) => {
+    res.render('pages/user');
+}
 
-    console.log(conta[0].dataValues.password);
+const sair = (req, res, next) => {
 
-    if (user.password === conta[0].dataValues.password) {
-        res.render('pages/user', {user: req.body});
-    } else {
-        res.redirect('/');
-    }
-}  
+    req.logout((err) => { 
+        if(err) {
+            return next(err);
+        } 
+    })
+    req.flash('success_msg', 'Desconectado com sucesso');
+    res.redirect('/')
+}
+
 
 // rota get /user/register
 const register = async (req, res) => {
@@ -36,7 +43,7 @@ const registered = async (req, res) => {
         res.redirect("/user/register");
     }else {
         // consulta ao banco para para ver se ja existe o usuario
-        const consulta = await User.findAll({
+        const consulta = await User.findOne({
             attributes: ['username'],
             where: {
                 username: req.body.username
@@ -47,7 +54,8 @@ const registered = async (req, res) => {
             console.log(err);
         });
 
-        if(consulta.length > 0) {
+        // informa que o usuário ja existe
+        if(consulta) {
             req.flash('error_msg', 'Já exite uma conta com esse usuário');
             res.redirect('/user/register');
         } else {
@@ -87,7 +95,9 @@ const registered = async (req, res) => {
 }
 
 module.exports = {
-    validate,
+    login,
+    logado,
+    sair,
     register,
     registered
 }
