@@ -10,56 +10,57 @@ body {
     font-family: 'Poppins', sans-serif;
 }
 
-.error {
-    border: 2px solid #d41b1b;
-    background-color: #df4747;
+.error,
+.success {
     box-sizing: border-box;
     border-radius: 10px;
     width: 40%;
     height: 40px;
-    margin-bottom: 10px;
-    padding-left: 10px;
+    margin: 0 0 10px 10px;
+}
+
+.error {
+    border: 2px solid #d41b1b;
+    background-color: #df4747;
 }
 
 .success {
     border: 2px solid #2ad41b;
     background-color: #72df47;
-    box-sizing: border-box;
-    border-radius: 10px;
-    width: 40%;
-    height: 40px;
-    margin-bottom: 10px;
-    padding-left: 10px;
 }
 
 .success p,
 .error p {
     margin: 0;
-    padding: 5px;
-    color: #ffffff;
+    padding: 5px 10px;
     font-size: 16px;
+    color: #ffffff;
 }
 
 .center {
-    width: 40%;
+    width: 40%; 
     height: fit-content;
     padding: 5px 0 30px 0;
     border-radius: 10px;
     background-color: #ffffff;
 }
 
-h1 {
-    margin-left: 40px;
+.title {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin: 10px 45px;
 }
 
 .conteudo {
     display: flex;
     flex-direction: column;
     width: 100%;
+    padding: 0;
+    margin: 0;
 }
 
 form input {
-    background-color: #ffffff;
     height: 25px;
     border-radius: 5px;
     border: 1px solid;
@@ -67,33 +68,59 @@ form input {
     padding: 5px 10px;
     font-size: 14px;
     font-weight: bold;
+    background-color: #ffffff;
 }
 
 .dados {
+    display: flex;
     height: 25px;
-    margin: 10px 45px;
+    margin: 0 45px 20px 45px;
+    justify-content: space-between;
+    align-items: center;
 }
 
 button {
+    height: 35px;
+    width: calc(100% - 90px);
+    margin: 10px 45px;
     border: none;
     border-radius: 5px;
-    width: calc(100% - 90px);
-    height: 35px;
-    margin: 0 45px 10px 45px;
     font-weight: bold;
     font-size: 14px;
     color: #ffffff;
     background-color: #52c43c;
-    margin: 10px 45px;
 }
 
-.btn-sair {
+.buttons {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    width:100%;
+    margin: 0;
+    padding-left: 45px;
+    /* justify-content: space-evenly; */
+}
+
+.btn-password {
+    background-color: #c1d41b;
+    /* width: 100%; */
+    margin: 10px 45px 10px 0px;
+    width: calc(100% - 90px);
+}
+
+.btn-danger {
     background-color: #d41b1b;
-    margin-top: 10px;
+    /* width: 100%; */
+    margin: 10px 45px 10px 0px;
+    width: calc(100% - 90px);
 }
 
 small {
     display: flex;
     justify-content: center;
     margin-top: 10px;
+}
+
+.img-edit {
+    height: 25px;
+    width: 25px;
 }

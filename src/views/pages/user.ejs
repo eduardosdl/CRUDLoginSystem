@@ -3,27 +3,28 @@
     <%- include('../partials/head') %>
 <body>
     <div class="center">
-        <h1><%= user.username %></h1>
-        <div class="conteudo">
-            <div class="dados">
-                <p>Email: eduardo@gmail.com</p>
-            </div>
-            <hr>
-            <div class="dados">
-                <p>Email: eduardo@gmail.com</p>
-            </div>
-            <hr>
-            <div class="dados">
-                <p>Email: eduardo@gmail.com</p>
-            </div>
-            <hr>
-            <div class="dados">
-                <p>Email: eduardo@gmail.com</p>
-            </div>
-            
-            
+        <div class="title">
+            <h1>Minha conta</h1>
+            <img src="/img/logout.svg" alt="lixeira" title="apagar conta" width="30px" height="30px">
         </div>
-        <a href="/user/sair"><button class="btn-exit">Sair</button></a>
+        <ul class="conteudo">
+            <li class="dados">
+                <p>Email: eduardo@gmail.com</p>
+                <img src="/img/edit.svg" alt="pencil" class="img-edit" title="editar">
+            </li>
+            <li class="dados">
+                <p>Email: eduardo@gmail.com</p>
+                <img src="/img/edit.svg" alt="pencil" class="img-edit" title="editar">
+            </li>
+            <li class="dados">
+                <p>Email: eduardo@gmail.com</p>
+                <img src="/img/edit.svg" alt="pencil" class="img-edit" title="editar">
+            </li>
+        </ul>
+        <div class="buttons">
+            <a href="/user/sair"><button class="btn-password">Mudar senha</button></a>
+            <a href="/user/sair"><button class="btn-danger">Excluir conta</button></a>
+        </div>
     </div>
 </body>
 </html>
