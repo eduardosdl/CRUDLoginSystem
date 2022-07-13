@@ -7,7 +7,7 @@ routes.post('/login', UserController.login);
 
 routes.get('/logado', userLogado, UserController.logado);
 
-routes.get('/sair', UserController.sair);
+routes.get('/sair', userLogado, UserController.sair);
 
 routes.get('/register', UserController.register);
 

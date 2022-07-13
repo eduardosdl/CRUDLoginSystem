@@ -4,7 +4,7 @@ const bcrypt = require('bcryptjs');
 const passport = require('passport');
 
 
-// rota post /user/login
+// rota para efetuar login ->  post /user/login
 const login = (req, res, next) => {
     // chama o passport para fazer a autenticação
     passport.authenticate('local', {
@@ -14,23 +14,25 @@ const login = (req, res, next) => {
     })(req, res, next);
 }
 
+// rota para carregar informaçoes do user -> get /user/logado
 const logado = (req, res) => {
-    res.render('pages/user');
+    res.render('pages/user', {user: req.user, campo: req.query.campo });
 }
 
+// rota para desconectar o user -> get /user/sair
 const sair = (req, res, next) => {
-
+    // função que faz a desconexão
     req.logout((err) => { 
         if(err) {
             return next(err);
         } 
-    })
-    req.flash('success_msg', 'Desconectado com sucesso');
+    });
+    // redirecionamento
     res.redirect('/')
 }
 
 
-// rota get /user/register
+// rota carregar o formulario de cadastro -> get /user/register
 const register = async (req, res) => {
     res.render('pages/new')
 }

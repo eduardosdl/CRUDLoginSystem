@@ -1,0 +1,15 @@
+<div class="card">
+        <div class="center">
+            <div class="title">
+                <h1>Alterar <%= campo %></h1>
+                <a href="/user/logado">
+                    <img src="/img/close.svg" alt="Fechar" title="Fechar" width="30px" height="30px">
+                </a>
+            </div>
+            <form action="/user/logado/alterar/<%= campo %>" method="post" class="conteudo">
+                <input type="<%= campo == 'email' ? 'email' : 'text' %>" name="<%= campo %>" placeholder="Novo <%= campo %>" required>
+                <input type="password" name="password" placeholder="Confirme a senha" required>
+                <button type="submit">Alterar</button>
+            </form>
+        </div>
+</div>

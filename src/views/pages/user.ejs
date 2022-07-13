@@ -5,20 +5,28 @@
     <div class="center">
         <div class="title">
             <h1>Minha conta</h1>
-            <img src="/img/logout.svg" alt="lixeira" title="apagar conta" width="30px" height="30px">
+            <a href="/user/sair">
+                <img src="/img/logout.svg" alt="lixeira" title="apagar conta" width="30px" height="30px">
+            </a>
         </div>
         <ul class="conteudo">
             <li class="dados">
-                <p>Email: eduardo@gmail.com</p>
-                <img src="/img/edit.svg" alt="pencil" class="img-edit" title="editar">
+                <p>Nome: <%= user.name%></p>
+                <a href="/user/logado/?campo=nome">
+                    <img src="/img/edit.svg" alt="pencil" class="img-edit" title="editar">
+                </a>
             </li>
             <li class="dados">
-                <p>Email: eduardo@gmail.com</p>
-                <img src="/img/edit.svg" alt="pencil" class="img-edit" title="editar">
+                <p>Usuário: <%= user.username%></p>
+                <a href="/user/logado/?campo=username">
+                    <img src="/img/edit.svg" alt="pencil" class="img-edit" title="editar">
+                </a>
             </li>
             <li class="dados">
-                <p>Email: eduardo@gmail.com</p>
-                <img src="/img/edit.svg" alt="pencil" class="img-edit" title="editar">
+                <p>Email: <%= user.email%></p>
+                <a href="/user/logado/?campo=email">
+                    <img src="/img/edit.svg" alt="pencil" class="img-edit" title="editar">
+                </a>
             </li>
         </ul>
         <div class="buttons">
@@ -26,5 +34,8 @@
             <a href="/user/sair"><button class="btn-danger">Excluir conta</button></a>
         </div>
     </div>
+    <% if(campo) { %>
+        <h1><%- include('../partials/edit', {campo}) %></h1>
+    <% }else{} %>
 </body>
 </html>
