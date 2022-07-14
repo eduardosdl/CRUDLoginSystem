@@ -31,6 +31,71 @@ const sair = (req, res, next) => {
     res.redirect('/')
 }
 
+const alter = async (req, res) => {
+    const campoalt = req.params.campo;
+    let newValue = req.body.newpassword;
+
+    console.log(campoalt);
+    console.log(newValue)
+
+    if(campoalt == 'username') {
+        const consulta = await User.findOne({
+            attributes: ['username'],
+            where: {
+                username: req.body.username
+            }
+        }).catch((err) => {
+            req.flash('error_msg', 'Houve um erro interno');
+            res.redirect(`/user/logado/?campo=${campoalt}`);
+            console.log(err);
+        });
+
+        if(consulta) {
+            req.flash('error_msg', 'Já exite uma conta com esse usuário');
+            res.redirect(`/user/logado/?campo=${campoalt}`);
+            return
+        }
+    }
+
+    if(campoalt == 'password') {
+        console.log("senha")
+       if(req.body.newpassword != req.body.newpassword2) {
+            req.flash('error_msg', 'As senhas são diferentes');
+            res.redirect(`/user/logado/?campo=${campoalt}`);
+            return
+        }
+
+        console.log("encripitando")
+        bcrypt.genSalt(10, (err, salt) => {
+            bcrypt.hash(newValue, salt, (err, hash) => {
+                newValue = hash;
+            });
+        });
+    }
+    
+    bcrypt.compare(req.body.password, req.user.password, (err, match) => {
+        console.log("comparando")
+        console.log(newValue);
+        console.log(match)
+        if(match) {
+            User.update({ [campoalt]: newValue}, {
+              where: {
+                  username: req.user.username
+                }
+            }).then(() => {
+                req.flash('success_msg', `${campoalt} alterado com sucesso`);
+                res.redirect(`/user/logado`);
+            }).catch(() => {
+                req.flash('error_msg', 'Houve um erro interno, tente novamente');
+                res.redirect(`/user/logado/?campo=${campoalt}`);
+            });
+        }else{
+            req.flash('error_msg', 'Senha incorreta');
+            res.redirect(`/user/logado/?campo=${campoalt}`);
+        }
+    });
+}
+
 
 // rota carregar o formulario de cadastro -> get /user/register
 const register = async (req, res) => {
@@ -100,6 +165,7 @@ module.exports = {
     login,
     logado,
     sair,
+    alter,
     register,
     registered
 }

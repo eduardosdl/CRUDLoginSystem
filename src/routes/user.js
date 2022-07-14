@@ -9,6 +9,8 @@ routes.get('/logado', userLogado, UserController.logado);
 
 routes.get('/sair', userLogado, UserController.sair);
 
+routes.post('/logado/alter/:campo', userLogado, UserController.alter)
+
 routes.get('/register', UserController.register);
 
 routes.post('/registered', UserController.registered);

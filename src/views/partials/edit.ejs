@@ -1,14 +1,21 @@
 <div class="card">
-        <div class="center">
+    <%- include('./msg') %>
+    <div class="center">
             <div class="title">
                 <h1>Alterar <%= campo %></h1>
                 <a href="/user/logado">
                     <img src="/img/close.svg" alt="Fechar" title="Fechar" width="30px" height="30px">
                 </a>
             </div>
-            <form action="/user/logado/alterar/<%= campo %>" method="post" class="conteudo">
+            <form action="/user/logado/alter/<%= campo %>" method="post" class="conteudo">
+            <% if(campo != "password") { %>
                 <input type="<%= campo == 'email' ? 'email' : 'text' %>" name="<%= campo %>" placeholder="Novo <%= campo %>" required>
                 <input type="password" name="password" placeholder="Confirme a senha" required>
+            <% } else { %>
+                <input type="password" name="password" placeholder="Senha atual" required>
+                <input type="password" name="newpassword" placeholder="Nova senha" required>
+                <input type="password" name="newpassword2" placeholder="Confirme a nova senha" required>
+            <% } %>
                 <button type="submit">Alterar</button>
             </form>
         </div>
