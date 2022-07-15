@@ -11,6 +11,8 @@ routes.get('/sair', userLogado, UserController.sair);
 
 routes.post('/logado/alter/:campo', userLogado, UserController.alter)
 
+routes.post('/logado/delete', userLogado, UserController.deleted)
+
 routes.get('/register', UserController.register);
 
 routes.post('/registered', UserController.registered);

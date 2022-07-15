@@ -84,7 +84,7 @@ form input {
     align-items: center;
 }
 
-button {
+button{
     height: 35px;
     width: calc(100% - 90px);
     margin: 10px 45px;
@@ -92,6 +92,7 @@ button {
     border-radius: 5px;
     font-weight: bold;
     font-size: 14px;
+    cursor: pointer;
     color: #ffffff;
     background-color: #52c43c;
 }
@@ -100,20 +101,17 @@ button {
     display: grid;
     grid-template-columns: 1fr 1fr;
     width:100%;
-    margin: 0;
-    padding-left: 45px;
+    /* margin-left: 45px; */
 }
 
-.btn-password {
+.btn-password{
     background-color: #c1d41b;
-    margin: 10px 45px 10px 0px;
-    width: calc(100% - 90px);
+    margin: 10px 45px;
 }
 
 .btn-danger {
     background-color: #d41b1b;
-    margin: 10px 45px 10px 0px;
-    width: calc(100% - 90px);
+    margin: 10px 45px;
 }
 
 small {

@@ -32,10 +32,15 @@ const sair = (req, res, next) => {
 }
 
 const alter = async (req, res) => {
+    const user = await User.findByPk(req.user.id);
+    // const salt = await bcrypt.genSalt(10);
     const campoalt = req.params.campo;
-    let newValue = req.body.newpassword;
+    let newValue;
 
-    console.log(campoalt);
+    console.log(campoalt)
+    campoalt == 'email'? newValue = req.body.email : 
+    campoalt == 'username'? newValue = req.body.username :
+    campoalt == 'name'? newValue = req.body.name : newValue = req.body.newpassword
     console.log(newValue)
 
     if(campoalt == 'username') {
@@ -58,25 +63,23 @@ const alter = async (req, res) => {
     }
 
     if(campoalt == 'password') {
-        console.log("senha")
        if(req.body.newpassword != req.body.newpassword2) {
             req.flash('error_msg', 'As senhas são diferentes');
             res.redirect(`/user/logado/?campo=${campoalt}`);
             return
         }
 
-        console.log("encripitando")
-        bcrypt.genSalt(10, (err, salt) => {
-            bcrypt.hash(newValue, salt, (err, hash) => {
-                newValue = hash;
-            });
-        });
+        console.log(newValue)
+
+        const salt = bcrypt.genSaltSync(10);
+        const hash = bcrypt.hashSync(newValue, salt);
+
+        newValue = hash;
     }
     
-    bcrypt.compare(req.body.password, req.user.password, (err, match) => {
-        console.log("comparando")
-        console.log(newValue);
-        console.log(match)
+    console.log(newValue);
+
+    bcrypt.compare(req.body.password, user.password, (err, match) => {
         if(match) {
             User.update({ [campoalt]: newValue}, {
               where: {
@@ -96,6 +99,25 @@ const alter = async (req, res) => {
     });
 }
 
+const deleted = async (req, res) => {
+    const user = await User.findByPk(req.user.id);
+
+    bcrypt.compare(req.body.password, user.password, (err, match) => {
+        if(match) {
+            User.destroy ({
+                where: {
+                    id: req.user.id
+                }
+            });
+
+            req.flash('success_msg', 'Conta apagada com sucesso');
+            res.redirect("/");
+        } else {
+            req.flash('error_msg', 'senha incorreta');
+            res.redirect("/user/logado/?campo=delete");
+        }
+    });
+}
 
 // rota carregar o formulario de cadastro -> get /user/register
 const register = async (req, res) => {
@@ -166,6 +188,7 @@ module.exports = {
     logado,
     sair,
     alter,
+    deleted,
     register,
     registered
 }

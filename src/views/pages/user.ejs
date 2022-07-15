@@ -31,11 +31,13 @@
         </ul>
         <div class="buttons">
             <a href="/user/logado/?campo=password" title="alterar senha"><button class="btn-password">Mudar senha</button></a>
-            <a href="/user/sair"><button class="btn-danger">Excluir conta</button></a>
+            <a href="/user/logado/?campo=delete"><button class="btn-danger">Excluir conta</button></a>
         </div>
     </div>
-    <% if(campo) { %>
+    <% if(campo == "delete") { %>
+        <h1><%- include('../partials/delete') %></h1>
+    <% }else if (campo) { %>        
         <h1><%- include('../partials/edit', {campo}) %></h1>
-    <% }else{} %>
+    <% } %>
 </body>
 </html>
