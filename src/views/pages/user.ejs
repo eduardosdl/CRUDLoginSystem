@@ -2,42 +2,47 @@
 <html lang="en">
     <%- include('../partials/head') %>
 <body>
+    <% if (success_msg != "") {%>
+        <div class="success">
+            <p><%= success_msg %></p>
+        </div>
+    <% }%>
     <div class="center">
         <div class="title">
             <h1>Minha conta</h1>
-            <a href="/user/sair">
+            <a href="/user/exit">
                 <img src="/img/logout.svg" alt="lixeira" title="Sair" width="30px" height="30px">
             </a>
         </div>
         <ul class="conteudo">
             <li class="dados">
                 <p>Nome: <%= user.name%></p>
-                <a href="/user/logado/?campo=name">
+                <a href="/user/connected/?data=name">
                     <img src="/img/edit.svg" alt="pencil" class="img-edit" title="editar nome">
                 </a>
             </li>
             <li class="dados">
                 <p>Usuário: <%= user.username%></p>
-                <a href="/user/logado/?campo=username">
+                <a href="/user/connected/?data=username">
                     <img src="/img/edit.svg" alt="pencil" class="img-edit" title="editar usuário">
                 </a>
             </li>
             <li class="dados">
                 <p>Email: <%= user.email%></p>
-                <a href="/user/logado/?campo=email">
+                <a href="/user/connected/?data=email">
                     <img src="/img/edit.svg" alt="pencil" class="img-edit" title="editar email">
                 </a>
             </li>
         </ul>
         <div class="buttons">
-            <a href="/user/logado/?campo=password" title="alterar senha"><button class="btn-password">Mudar senha</button></a>
-            <a href="/user/logado/?campo=delete"><button class="btn-danger">Excluir conta</button></a>
+            <a href="/user/connected/?data=password" title="alterar senha"><button class="btn-password">Mudar senha</button></a>
+            <a href="/user/connected/?data=delete" title="Exculir conta"><button class="btn-danger">Excluir conta</button></a>
         </div>
     </div>
-    <% if(campo == "delete") { %>
+    <% if(data == "delete") { %>
         <h1><%- include('../partials/delete') %></h1>
-    <% }else if (campo) { %>        
-        <h1><%- include('../partials/edit', {campo}) %></h1>
+    <% }else if (data) { %>        
+        <h1><%- include('../partials/edit', {data}) %></h1>
     <% } %>
 </body>
 </html>

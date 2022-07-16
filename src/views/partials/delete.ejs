@@ -2,14 +2,14 @@
     <%- include('./msg') %>
     <div class="center">
             <div class="title">
-                <h1>Tem certeza que quer excluir conta</h1>
-                <a href="/user/logado">
+                <h1>Tem certeza ?</h1>
+                <a href="/user/connected">
                     <img src="/img/close.svg" alt="Fechar" title="Fechar" width="30px" height="30px">
                 </a>
             </div>
-            <form action="/user/logado/delete" method="post" class="conteudo">
+            <form action="/user/connected/delete" method="post" class="conteudo">
                 <input type="password" name="password" placeholder="Confirma a senha" required>
-                <button type="submit" class="btn-danger">Alterar</button>
+                <button type="submit" class="btn-danger">Apagar</button>
             </form>
         </div>
 </div>

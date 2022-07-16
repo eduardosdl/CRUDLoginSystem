@@ -38,6 +38,7 @@ const User = db.define('users', {
     }
 });
 
+// testa a conexão como banco de dados
 User.sync().then(() => {
     console.log('Banco de dados conectado');
 }).catch((err) => {

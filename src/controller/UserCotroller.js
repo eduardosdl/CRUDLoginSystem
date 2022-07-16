@@ -1,26 +1,26 @@
-const bodyParser = require('body-parser');
+// importação de modulos
 const User = require('../models/User');
 const bcrypt = require('bcryptjs');
 const passport = require('passport');
 
 
-// rota para efetuar login ->  post /user/login
+// rota para efetuar login ->  post - /user/login
 const login = (req, res, next) => {
     // chama o passport para fazer a autenticação
     passport.authenticate('local', {
-        successRedirect: '/user/logado',
+        successRedirect: '/user/connected',
         failureRedirect: '/',
         failureFlash: true
     })(req, res, next);
 }
 
-// rota para carregar informaçoes do user -> get /user/logado
-const logado = (req, res) => {
-    res.render('pages/user', {user: req.user, campo: req.query.campo });
+// rota para carregar informaçoes do user -> get - /user/logado
+const connected = (req, res) => {
+    res.render('pages/user', {user: req.user, data: req.query.data});
 }
 
-// rota para desconectar o user -> get /user/sair
-const sair = (req, res, next) => {
+// rota para desconectar o user -> get - /user/exit
+const exit = (req, res, next) => {
     // função que faz a desconexão
     req.logout((err) => { 
         if(err) {
@@ -31,19 +31,19 @@ const sair = (req, res, next) => {
     res.redirect('/')
 }
 
+// rota para alterar dados ->  post - /user/connected/alter/:data
 const alter = async (req, res) => {
     const user = await User.findByPk(req.user.id);
-    // const salt = await bcrypt.genSalt(10);
-    const campoalt = req.params.campo;
+    const dataAlt = req.params.data;
     let newValue;
 
-    console.log(campoalt)
-    campoalt == 'email'? newValue = req.body.email : 
-    campoalt == 'username'? newValue = req.body.username :
-    campoalt == 'name'? newValue = req.body.name : newValue = req.body.newpassword
-    console.log(newValue)
+    // informa qual sera o valor do newValue de acordo com o dado a ser alterado
+    dataAlt == 'username'? newValue = req.body.username :
+    dataAlt == 'email'? newValue = req.body.email : 
+    dataAlt == 'name'? newValue = req.body.name : newValue = req.body.newpassword;
 
-    if(campoalt == 'username') {
+    if(dataAlt == 'username') {
+        // consulta o banco para saber se n há user repetido
         const consulta = await User.findOne({
             attributes: ['username'],
             where: {
@@ -51,59 +51,64 @@ const alter = async (req, res) => {
             }
         }).catch((err) => {
             req.flash('error_msg', 'Houve um erro interno');
-            res.redirect(`/user/logado/?campo=${campoalt}`);
+            res.redirect(`/user/connected/?data=${dataAlt}`);
             console.log(err);
         });
 
+        // caso haja retorno da consulta informa o erro
         if(consulta) {
             req.flash('error_msg', 'Já exite uma conta com esse usuário');
-            res.redirect(`/user/logado/?campo=${campoalt}`);
+            res.redirect(`/user/connected/?data=${dataAlt}`);
             return
         }
     }
 
-    if(campoalt == 'password') {
+    if(dataAlt == 'password') {
+        // verifica se as duas senhas são iguais
        if(req.body.newpassword != req.body.newpassword2) {
             req.flash('error_msg', 'As senhas são diferentes');
-            res.redirect(`/user/logado/?campo=${campoalt}`);
+            res.redirect(`/user/connected/?data=${dataAlt}`);
             return
         }
 
-        console.log(newValue)
-
+        // gera o hash da senha nova e armazena na variavel newValue
         const salt = bcrypt.genSaltSync(10);
         const hash = bcrypt.hashSync(newValue, salt);
-
         newValue = hash;
     }
-    
-    console.log(newValue);
 
+    // compara a senha escrita com a senha atual da conta
     bcrypt.compare(req.body.password, user.password, (err, match) => {
         if(match) {
-            User.update({ [campoalt]: newValue}, {
+            // caso seja igual executa a tualização
+            User.update({ [dataAlt]: newValue}, {
               where: {
                   username: req.user.username
                 }
             }).then(() => {
-                req.flash('success_msg', `${campoalt} alterado com sucesso`);
-                res.redirect(`/user/logado`);
-            }).catch(() => {
+                req.flash('success_msg', `${dataAlt} alterado com sucesso`);
+                res.redirect(`/user/connected`);
+            }).catch((err) => {
                 req.flash('error_msg', 'Houve um erro interno, tente novamente');
-                res.redirect(`/user/logado/?campo=${campoalt}`);
+                res.redirect(`/user/connected/?data=${dataAlt}`);
+                console.log(err);
             });
         }else{
+            // caso não seja retorna erro
             req.flash('error_msg', 'Senha incorreta');
-            res.redirect(`/user/logado/?campo=${campoalt}`);
+            res.redirect(`/user/connected/?data=${dataAlt}`);
         }
     });
 }
 
+// rota para apagar usuario ->  post - /user/connected/delete
 const deleted = async (req, res) => {
     const user = await User.findByPk(req.user.id);
 
+    // compara a senha escrita com a senha usuario
     bcrypt.compare(req.body.password, user.password, (err, match) => {
         if(match) {
+            // caso sejam iguais apaga a conta
             User.destroy ({
                 where: {
                     id: req.user.id
@@ -113,15 +118,16 @@ const deleted = async (req, res) => {
             req.flash('success_msg', 'Conta apagada com sucesso');
             res.redirect("/");
         } else {
+            // caso não sejam iguais informam erro
             req.flash('error_msg', 'senha incorreta');
-            res.redirect("/user/logado/?campo=delete");
+            res.redirect("/user/connected/?data=delete");
         }
     });
 }
 
-// rota carregar o formulario de cadastro -> get /user/register
+// rota carregar o formulario de cadastro -> get - /user/register
 const register = async (req, res) => {
-    res.render('pages/new')
+    res.render('pages/new');
 }
 
 // rota para cadastro do user -> post /user/registered
@@ -174,7 +180,7 @@ const registered = async (req, res) => {
                     }).catch((err) => {
                         req.flash('error_msg', 'Houve um erro ao criar o usuario, tente novamente');
                         res.redirect('/user/register');
-                        console.log('houve um erro: '+err);
+                        console.log(`Houve um erro: ${err}`);
                     });
                 });
             });
@@ -185,8 +191,8 @@ const registered = async (req, res) => {
 
 module.exports = {
     login,
-    logado,
-    sair,
+    connected,
+    exit,
     alter,
     deleted,
     register,

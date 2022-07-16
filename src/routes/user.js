@@ -1,20 +1,27 @@
-const routes = require('express').Router();
+const router = require('express').Router();
 const UserController = require("../controller/UserCotroller");
 const passport = require('passport');
-const { userLogado } = require('../helpers/userLogado');
+const { userConnected } = require('../helpers/userConnected');
 
-routes.post('/login', UserController.login);
+// rota para efetuar login -> post - /user/login
+router.post('/login', UserController.login);
 
-routes.get('/logado', userLogado, UserController.logado);
+// rota para informações da conta -> get - /user/conncted - privada
+router.get('/connected', userConnected, UserController.connected);
 
-routes.get('/sair', userLogado, UserController.sair);
+// rota para desconectar -> get - /user/sair - privada
+router.get('/exit', userConnected, UserController.exit);
 
-routes.post('/logado/alter/:campo', userLogado, UserController.alter)
+// rota para envio de alteração -> post - /user/connected/alter/:data - privada
+router.post('/connected/alter/:data', userConnected, UserController.alter)
 
-routes.post('/logado/delete', userLogado, UserController.deleted)
+// rota para excluir a conta -> post - /user/connected/delete - privada
+router.post('/connected/delete', userConnected, UserController.deleted)
 
-routes.get('/register', UserController.register);
+// rota para carregar o form de registro de usuario -> get - /user/register
+router.get('/register', UserController.register);
 
-routes.post('/registered', UserController.registered);
+// rota para cadastrar usuario no banco -> post - /user/registered
+router.post('/registered', UserController.registered);
 
-module.exports = routes;
+module.exports = router;
