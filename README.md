@@ -12,7 +12,16 @@
 
 ## Para Usar:
 - Faça o download do repositório
-- Adicione seu usuário e senha no arquivo /src/config/database.js
+- Crie um novo banco de dados, com o comando
+###
+    create database [nome do banco];
+
+- Adicione seu usuário, senha e o nome do banco de dados no arquivo /src/config/database.js
+###
+    username: '[nome de usuario do banco]',
+    password: '[senha do usuario do banco',
+    database: '[nome do banco de dados criado]'
+
 - Caso queira altere a porta no final do arquivo /src/server.js
 - execute os seguintes comandos com a pasta aberta no terminal
 ###
