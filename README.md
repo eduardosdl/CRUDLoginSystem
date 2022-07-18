@@ -16,7 +16,7 @@
 - Donwload repositorie
 - create an new database, with command:
 ###
-    create database [nome do banco];
+    create database [database name];
 
 - add your user, password and the name of the created database in the file /src/config/database.js:
 ###
