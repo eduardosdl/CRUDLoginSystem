@@ -1,3 +1,38 @@
+# English
+## Login System created to be CRUD:
+
+- Create: create account
+- Read: login
+- Update: edit profile
+- Delete: delete account
+
+## technologies used:
+
+- NodeJS base to backend
+- MySQL database
+- Architecture MVC (Model, View, Controller)
+
+## To use:
+- Donwload repositorie
+- create an new database, with command:
+###
+    create database [nome do banco];
+
+- add your user, password and the name of the created database in the file /src/config/database.js:
+###
+    username: '[username]',
+    password: '[password',
+    database: '[database name]'
+
+- if necessary edit the port in the end file /src/server.js
+- run the commands below with terminal open in the folder
+###
+    npm install
+    
+    node src/server
+
+
+# Português
 ## Sistema de Login desenvolvido no intuito de criar um CRUD:
 
 - Create: ao criar uma conta
