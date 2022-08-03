@@ -27,8 +27,7 @@ app.use((req, res, next) => {
     res.locals.user = req.user || null;
     next();
 });
-// body-parser
-// app.use(bodyParser.json());
+// requisição de dados
 app.use(express.urlencoded({extended: true}));
 // ejs
 app.set('view engine', 'ejs');
