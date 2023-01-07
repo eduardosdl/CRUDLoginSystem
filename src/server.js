@@ -1,17 +1,21 @@
 // requisição de modulos
 const express = require('express');
-const user = require('./routes/user');
-const path = require('path');
-const app = express();
 const session = require('express-session');
 const flash = require('connect-flash');
+const path = require('path');
 const passport = require('passport');
+
+const user = require('./routes/user');
+
 require('./config/auth')(passport);
+require('dotenv').config();
+
+const app = express();
 
 // config
 // session
 app.use(session({
-    secret: "dhfphefnsdkdfuhdsj",
+    secret: process.env.SESSION_SECRET,
     resave: true,
     saveUninitialized: true
 }));
